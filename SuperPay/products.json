@@ -1,0 +1,7 @@
+[
+    {"id": 1, "name": "Apple", "price": 0.99, "imageURL": "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce"},
+    {"id": 2, "name": "Banana", "price": 0.59, "imageURL": "https://images.unsplash.com/photo-1574226516831-e1dff420e8f8"},
+    {"id": 3, "name": "Milk", "price": 2.49, "imageURL": "https://images.unsplash.com/photo-1519864600265-abb23847ef2c"},
+    {"id": 4, "name": "Bread", "price": 1.99, "imageURL": "https://images.unsplash.com/photo-1502741338009-cac2772e18bc"},
+    {"id": 5, "name": "Eggs", "price": 3.99, "imageURL": "https://images.unsplash.com/photo-1464306076886-debede1a7c94"}
+]
