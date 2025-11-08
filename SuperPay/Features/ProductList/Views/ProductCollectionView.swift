@@ -8,40 +8,7 @@
 import SwiftUI
 import Combine
 
-struct ProductCellView: View {
-    let product: Product
-    let addToCart: (Product) -> Void
-    @StateObject private var imageVM: AsyncImageViewModel
-
-    init(product: Product, addToCart: @escaping (Product) -> Void) {
-        self.product = product
-        self.addToCart = addToCart
-        _imageVM = StateObject(wrappedValue: AsyncImageViewModel(url: URL(string: product.imageURL)))
-    }
-
-    var body: some View {
-        VStack(spacing: 8) {
-            AsyncImageView(viewModel: imageVM)
-                .frame(height: 130)
-                .background(Color(.systemGray6))
-                .cornerRadius(12)
-            Text(product.name)
-                .font(.subheadline)
-            Text("$\(product.price, specifier: "%.2f")")
-                .font(.caption)
-                .foregroundColor(.gray)
-            Button("Add") {
-                addToCart(product)
-            }
-            .buttonStyle(.borderedProminent)
-        }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(radius: 2)
-    }
-}
-
+// ProductCollectionView displays a grid of products
 struct ProductCollectionView: View {
     let products: [Product]
     let addToCart: (Product) -> Void

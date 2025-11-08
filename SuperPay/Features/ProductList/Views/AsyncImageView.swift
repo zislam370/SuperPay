@@ -1,15 +1,13 @@
 import SwiftUI
 
-// ImageCache is a singleton for caching UIImage objects in memory to optimize image loading in views.
+// ImageCache is a singleton for caching UIImage
 class ImageCache {
     static let shared = NSCache<NSURL, UIImage>()
 }
 
-// AsyncImageView displays an image from a URL asynchronously, showing loading and error states.
+// ViewModel for AsyncImageView to handle image loading
 struct AsyncImageView: View {
-    // ObservedObject view model handles image loading and state management
     @ObservedObject var viewModel: AsyncImageViewModel
-    // Placeholder image shown while loading or on error
     var placeholder: Image = Image(systemName: "photo")
     
     var body: some View {
@@ -47,6 +45,6 @@ struct AsyncImageView: View {
                 }
             }
         }
-        .aspectRatio(10/9, contentMode: .fit) // Use a taller aspect ratio for the image view
+        .aspectRatio(10/9, contentMode: .fit)
     }
 }

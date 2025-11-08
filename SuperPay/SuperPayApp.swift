@@ -10,10 +10,11 @@ import SwiftUI
 @main
 struct SuperPayApp: App {
     var cartVM = CartViewModel()
+    var productListVM = ProductListViewModel()
 
     var body: some Scene {
         WindowGroup {
-            ProductListView(cartVM: cartVM)
+            ProductListView(viewModel: productListVM, cartVM: cartVM)
         }
     }
 }

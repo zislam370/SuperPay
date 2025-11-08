@@ -8,22 +8,16 @@
 import SwiftUI
 import Combine
 
+// ProductListView displays a list of products and manages cart navigation and refresh logic.
 struct ProductListView: View {
     @ObservedObject var viewModel: ProductListViewModel
     @ObservedObject var cartVM: CartViewModel
     @State private var showCart = false
     @State private var isRefreshing = false
-    
-    let imageLoaderFactory: (String) -> AsyncImageViewModel
-    
-    init(viewModel: ProductListViewModel = ProductListViewModel(), cartVM: CartViewModel = CartViewModel(), imageLoaderFactory: @escaping (String) -> AsyncImageViewModel = { AsyncImageViewModel(url: URL(string: $0)) }) {
-        self.viewModel = viewModel
-        self.cartVM = cartVM
-        self.imageLoaderFactory = imageLoaderFactory
-    }
-    
+
+    // Modern SwiftUI navigation uses NavigationStack
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 if viewModel.isLoading {
                     ProgressView("Loading products...")
@@ -43,6 +37,7 @@ struct ProductListView: View {
                         isRefreshing = false
                     }
                 }
+                // Cart button with badge
                 Button(action: { showCart = true }) {
                     ZStack(alignment: .topTrailing) {
                         Text("Go to Cart")
@@ -74,6 +69,7 @@ struct ProductListView: View {
             .navigationTitle("Products")
             .task { await viewModel.fetchProducts() }
             .onChange(of: showCart) { oldValue, newValue in
+                // Reload products when cart is closed
                 if oldValue == true && newValue == false {
                     Task { await viewModel.fetchProducts() }
                 }
