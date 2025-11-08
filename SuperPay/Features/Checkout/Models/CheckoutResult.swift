@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CheckoutResult {
+struct CheckoutResult: Equatable {
     let success: Bool
     let message: String
 }

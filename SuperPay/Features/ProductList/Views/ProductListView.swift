@@ -11,6 +11,8 @@ import Combine
 struct ProductListView: View {
     @ObservedObject var viewModel: ProductListViewModel
     @ObservedObject var cartVM: CartViewModel
+    @State private var showCart = false
+    @State private var isRefreshing = false
 
     init(viewModel: ProductListViewModel = ProductListViewModel(), cartVM: CartViewModel = CartViewModel()) {
         self.viewModel = viewModel
@@ -25,9 +27,20 @@ struct ProductListView: View {
                 } else if let error = viewModel.error {
                     Text(error).foregroundColor(.red)
                 } else {
-                    ProductCollectionView(products: viewModel.products, addToCart: { cartVM.addToCart(product: $0) })
+                    ScrollView {
+                        if isRefreshing {
+                            ProgressView("Refreshing...")
+                                .padding(.top)
+                        }
+                        ProductCollectionView(products: viewModel.products, addToCart: { cartVM.addToCart(product: $0) })
+                    }
+                    .refreshable {
+                        isRefreshing = true
+                        await viewModel.fetchProducts()
+                        isRefreshing = false
+                    }
                 }
-                NavigationLink(destination: CartView(cartVM: cartVM)) {
+                Button(action: { showCart = true }) {
                     ZStack(alignment: .topTrailing) {
                         Text("Go to Cart")
                             .padding(.vertical, 8)
@@ -50,10 +63,18 @@ struct ProductListView: View {
                     }
                 }
                 .padding(.top)
+                .sheet(isPresented: $showCart) {
+                    CartView(cartVM: cartVM, showCart: $showCart)
+                }
                 WalletView(wallet: cartVM.wallet)
             }
             .navigationTitle("Products")
             .task { await viewModel.fetchProducts() }
+            .onChange(of: showCart) { oldValue, newValue in
+                if oldValue == true && newValue == false {
+                    Task { await viewModel.fetchProducts() }
+                }
+            }
         }
     }
 }

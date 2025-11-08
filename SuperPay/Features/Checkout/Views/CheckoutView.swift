@@ -13,6 +13,8 @@ struct CheckoutView: View {
     @ObservedObject var cartVM: CartViewModel
     @ObservedObject var viewModel: CheckoutViewModel
     @Environment(\.presentationMode) var presentationMode
+    @State private var showSuccessAlert = false
+    var onPaymentSuccess: (() -> Void)? = nil
 
     var body: some View {
         VStack(spacing: 20) {
@@ -57,6 +59,22 @@ struct CheckoutView: View {
             viewModel.isLoading = false
             viewModel.error = nil
             viewModel.result = nil
+            showSuccessAlert = false
+        }
+        .onChange(of: viewModel.result) { oldValue, newValue in
+            if let result = newValue, result.success {
+                showSuccessAlert = true
+            }
+        }
+        .alert(isPresented: $showSuccessAlert) {
+            Alert(
+                title: Text("Payment Successful"),
+                message: Text("Thank you for your purchase!"),
+                dismissButton: .default(Text("OK")) {
+                    presentationMode.wrappedValue.dismiss()
+                    onPaymentSuccess?()
+                }
+            )
         }
     }
 }

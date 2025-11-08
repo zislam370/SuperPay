@@ -18,25 +18,14 @@ struct ProductCollectionView: View {
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(products) { product in
                     VStack(spacing: 8) {
-                        AsyncImage(url: URL(string: product.imageURL)) { phase in
-                            if let image = phase.image {
-                                image.resizable().scaledToFit()
-                            } else if phase.error != nil {
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundColor(.gray)
-                            } else {
-                                ProgressView()
-                            }
-                        }
-                        .frame(height: 80)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(12)
+                        AsyncImageView(url: URL(string: product.imageURL))
+                            .frame(height: 130)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(12)
                         Text(product.name)
-                            .font(.headline)
-                        Text("$\(product.price, specifier: "%.2f")")
                             .font(.subheadline)
+                        Text("$\(product.price, specifier: "%.2f")")
+                            .font(.caption)
                             .foregroundColor(.gray)
                         Button("Add") {
                             addToCart(product)
