@@ -12,6 +12,7 @@ struct CartView: View {
     @ObservedObject var cartVM: CartViewModel
     @Binding var showCart: Bool
     @State private var showCheckout = false
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
@@ -41,10 +42,6 @@ struct CartView: View {
                     CheckoutView(
                         cartVM: cartVM,
                         viewModel: CheckoutViewModel(cartVM: cartVM, walletVM: cartVM.walletVM),
-                        onPaymentSuccess: {
-                            showCheckout = false
-                            showCart = false
-                        }
                     )
                 }
                 WalletView(wallet: cartVM.walletVM.wallet)

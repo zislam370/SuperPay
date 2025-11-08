@@ -11,3 +11,7 @@ struct CheckoutResult: Equatable {
     let success: Bool
     let message: String
 }
+
+extension CheckoutResult: Identifiable {
+    var id: String { message + String(success) }
+}
