@@ -11,31 +11,52 @@ import Combine
 
 struct CheckoutView: View {
     @ObservedObject var cartVM: CartViewModel
-    @StateObject var viewModel = CheckoutViewModel()
+    @ObservedObject var viewModel: CheckoutViewModel
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         VStack(spacing: 20) {
-            if viewModel.isLoading {
-                ProgressView("Processing payment...")
-            } else if let error = viewModel.error {
-                Text(error).foregroundColor(.red)
-                Button("Close") { presentationMode.wrappedValue.dismiss() }
-            } else if let result = viewModel.result {
-                Text(result.message)
-                    .foregroundColor(result.success ? .green : .red)
-                Button("Close") { presentationMode.wrappedValue.dismiss() }
-            } else {
-                Button("Confirm Payment") {
-                    Task {
-                        await viewModel.checkout(cartItems: cartVM.items, cartVM: cartVM)
+            Group {
+                if viewModel.isLoading {
+                    ProgressView("Processing payment...")
+                } else if let error = viewModel.error {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                } else if let result = viewModel.result {
+                    if result.success {
+                        Text(result.message)
+                            .foregroundColor(.green)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                    } else {
+                        Text(result.message)
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                            .padding()
                     }
+                } else {
+                    Button("Confirm Payment") {
+                        Task {
+                            await viewModel.checkout(cartItems: cartVM.items, cartVM: cartVM)
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.top, 16)
                 }
-                .buttonStyle(.borderedProminent)
             }
+            Button("Close") { presentationMode.wrappedValue.dismiss() }
+                .buttonStyle(.bordered)
+                .padding(.bottom, 24)
+                .disabled(viewModel.isLoading)
         }
         .padding()
         .navigationTitle("Checkout")
+        .onAppear {
+            viewModel.isLoading = false
+            viewModel.error = nil
+            viewModel.result = nil
+        }
     }
 }
-

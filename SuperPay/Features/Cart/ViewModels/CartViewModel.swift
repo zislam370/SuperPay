@@ -11,7 +11,7 @@ import Combine
 class CartViewModel: CartViewModelProtocol {
     @Published var items: [CartItem] = []
     @Published var total: Double = 0.0
-    @Published var wallet: Wallet = Wallet(id: UUID(), balance: 20.0)
+    @Published var wallet: Wallet = Wallet(id: UUID(), balance: 200.0)
 
     func addToCart(product: Product) {
         if let index = items.firstIndex(where: { $0.product.id == product.id }) {
