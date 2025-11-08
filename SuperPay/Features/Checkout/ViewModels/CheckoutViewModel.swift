@@ -13,12 +13,16 @@ class CheckoutViewModel: CheckoutViewModelProtocol {
     @Published var result: CheckoutResult?
     @Published var error: String?
     private var service: CheckoutServiceProtocol
+    private var cartVM: any CartViewModelProtocol
+    private var walletVM: any WalletViewModelProtocol
 
-    init(service: CheckoutServiceProtocol = CheckoutService()) {
+    init(service: CheckoutServiceProtocol = CheckoutService(), cartVM: any CartViewModelProtocol, walletVM: any WalletViewModelProtocol) {
         self.service = service
+        self.cartVM = cartVM
+        self.walletVM = walletVM
     }
 
-    func checkout(cartItems: [CartItem], cartVM: CartViewModel) async {
+    func checkout(cartItems: [CartItem]) async {
         isLoading = true
         error = nil
         do {
@@ -27,8 +31,8 @@ class CheckoutViewModel: CheckoutViewModelProtocol {
             self.isLoading = false
             if result.success {
                 let total = cartVM.total
-                if cartVM.wallet.balance >= total {
-                    cartVM.deductFromWallet(amount: total)
+                if walletVM.wallet.balance >= total {
+                    walletVM.deductFromWallet(amount: total)
                     cartVM.clearCart()
                 } else {
                     self.error = "Insufficient wallet balance."

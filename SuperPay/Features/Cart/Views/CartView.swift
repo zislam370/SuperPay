@@ -40,14 +40,14 @@ struct CartView: View {
                 .sheet(isPresented: $showCheckout) {
                     CheckoutView(
                         cartVM: cartVM,
-                        viewModel: CheckoutViewModel(),
+                        viewModel: CheckoutViewModel(cartVM: cartVM, walletVM: cartVM.walletVM),
                         onPaymentSuccess: {
                             showCheckout = false
                             showCart = false
                         }
                     )
                 }
-                WalletView(wallet: cartVM.wallet)
+                WalletView(wallet: cartVM.walletVM.wallet)
             }
             .navigationTitle("Cart")
             .toolbar {

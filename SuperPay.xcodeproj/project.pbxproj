@@ -102,6 +102,7 @@
 				31D1B16C2EBD78C00007C3D6 /* Sources */,
 				31D1B16D2EBD78C00007C3D6 /* Frameworks */,
 				31D1B16E2EBD78C00007C3D6 /* Resources */,
+				318B15C32EBF446800AB91FD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -230,6 +231,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		318B15C32EBF446800AB91FD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.swiftlint.yml",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		31D1B16C2EBD78C00007C3D6 /* Sources */ = {

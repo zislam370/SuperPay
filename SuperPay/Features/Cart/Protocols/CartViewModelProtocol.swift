@@ -10,14 +10,10 @@ import Foundation
 protocol CartViewModelProtocol: ObservableObject {
     var items: [CartItem] { get set }
     var total: Double { get set }
-    var wallet: Wallet { get set }
     func addToCart(product: Product)
     func removeFromCart(item: CartItem)
     func updateTotal()
     func clearCart()
     func saveCart()
     func loadCart(products: [Product])
-    func saveWallet()
-    func loadWallet()
-    func deductFromWallet(amount: Double)
 }

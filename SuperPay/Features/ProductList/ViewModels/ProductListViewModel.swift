@@ -12,12 +12,15 @@ class ProductListViewModel: ProductListViewModelProtocol {
     @Published var products: [Product] = []
     @Published var isLoading = false
     @Published var error: String?
+    
+    // Dependency injection
     private var service: ProductServiceProtocol
-
+    
     init(service: ProductServiceProtocol = ProductService()) {
         self.service = service
     }
-
+    
+    // Fetches products
     func fetchProducts() async {
         isLoading = true
         error = nil

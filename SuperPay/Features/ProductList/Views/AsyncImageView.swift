@@ -1,34 +1,34 @@
 import SwiftUI
 
+// ImageCache is a singleton for caching UIImage objects in memory to optimize image loading in views.
 class ImageCache {
     static let shared = NSCache<NSURL, UIImage>()
 }
 
+// AsyncImageView displays an image from a URL asynchronously, showing loading and error states.
 struct AsyncImageView: View {
-    let url: URL?
+    // ObservedObject view model handles image loading and state management
+    @ObservedObject var viewModel: AsyncImageViewModel
+    // Placeholder image shown while loading or on error
     var placeholder: Image = Image(systemName: "photo")
-    @StateObject private var viewModel: AsyncImageViewModel
-
-    init(url: URL?, placeholder: Image = Image(systemName: "photo")) {
-        self.url = url
-        self.placeholder = placeholder
-        _viewModel = StateObject(wrappedValue: AsyncImageViewModel(url: url))
-    }
-
+    
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
-            let height = width * 0.9 // Increase height ratio for a taller image
+            let height = width * 0.9 // Calculate height for a taller image aspect ratio
             Group {
+                // Show progress indicator while image is loading
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(width: width, height: height)
+                // Show loaded image if available
                 } else if let data = viewModel.imageData, let image = UIImage(data: data) {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
                         .frame(width: width, height: height)
                         .clipped()
+                // Show placeholder if image loading failed
                 } else if viewModel.didFail {
                     placeholder
                         .resizable()
@@ -36,6 +36,7 @@ struct AsyncImageView: View {
                         .frame(width: width, height: height)
                         .opacity(0.5)
                         .clipped()
+                // Show placeholder while waiting for image data
                 } else {
                     placeholder
                         .resizable()
@@ -46,6 +47,6 @@ struct AsyncImageView: View {
                 }
             }
         }
-        .aspectRatio(10/9, contentMode: .fit) // Use a taller aspect ratio
+        .aspectRatio(10/9, contentMode: .fit) // Use a taller aspect ratio for the image view
     }
 }

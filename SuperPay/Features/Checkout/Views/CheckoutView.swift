@@ -41,7 +41,7 @@ struct CheckoutView: View {
                 } else {
                     Button("Confirm Payment") {
                         Task {
-                            await viewModel.checkout(cartItems: cartVM.items, cartVM: cartVM)
+                            await viewModel.checkout(cartItems: cartVM.items)
                         }
                     }
                     .buttonStyle(.borderedProminent)

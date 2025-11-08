@@ -11,5 +11,5 @@ protocol CheckoutViewModelProtocol: ObservableObject {
     var isLoading: Bool { get set }
     var result: CheckoutResult? { get set }
     var error: String? { get set }
-    func checkout(cartItems: [CartItem], cartVM: CartViewModel) async
+    func checkout(cartItems: [CartItem]) async
 }

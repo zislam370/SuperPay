@@ -13,12 +13,15 @@ struct ProductListView: View {
     @ObservedObject var cartVM: CartViewModel
     @State private var showCart = false
     @State private var isRefreshing = false
-
-    init(viewModel: ProductListViewModel = ProductListViewModel(), cartVM: CartViewModel = CartViewModel()) {
+    
+    let imageLoaderFactory: (String) -> AsyncImageViewModel
+    
+    init(viewModel: ProductListViewModel = ProductListViewModel(), cartVM: CartViewModel = CartViewModel(), imageLoaderFactory: @escaping (String) -> AsyncImageViewModel = { AsyncImageViewModel(url: URL(string: $0)) }) {
         self.viewModel = viewModel
         self.cartVM = cartVM
+        self.imageLoaderFactory = imageLoaderFactory
     }
-
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -66,7 +69,7 @@ struct ProductListView: View {
                 .sheet(isPresented: $showCart) {
                     CartView(cartVM: cartVM, showCart: $showCart)
                 }
-                WalletView(wallet: cartVM.wallet)
+                WalletView(wallet: cartVM.walletVM.wallet)
             }
             .navigationTitle("Products")
             .task { await viewModel.fetchProducts() }
