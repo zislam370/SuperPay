@@ -15,7 +15,7 @@ SuperPay is a modern SwiftUI-based mini shopping cart and payment demo app, desi
 ## Architecture
 SuperPay follows a modular MVVM (Model-View-ViewModel) architecture with protocol-oriented design and SOLID principles.
 ## Reson for selecting this architecture:
-- **MVVM**: Provides separation of concerns, testability, and SwiftUI compatibility.t supports scalability, SOLID principles, mocking, dependency injection, and maintainability.It supports scalability, SOLID principles, mocking, dependency injection, and maintainability. Allows for clear separation between UI and business logic. Also this project is a simple and small project so MVVM is a good fit.
+- **MVVM**: Provides separation of concerns, testability, and SwiftUI compatibility.It supports scalability, SOLID principles, mocking, dependency injection, and maintainability. Allows for clear separation between UI and business logic. Also this project is a simple and small project so MVVM is a good fit.
 
 ## Modules
 - **ProductList**: Displays products, handles image loading, and add-to-cart actions
