@@ -8,6 +8,7 @@ class ProductServiceTests: XCTestCase {
         let products = try await service.fetchProductsAsync()
         XCTAssertTrue(products.count > 0)
     }
+    
     func testProductServiceFailure() async throws {
         let service = ProductService()
         let orig = Bundle.main.url(forResource: "products", withExtension: "json")

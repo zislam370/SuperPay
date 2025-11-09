@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-/// CartView displays the user's cart, allows item removal, shows total, and handles checkout navigation.
+// CartView displays the user's cart, allows item removal, shows total, and handles checkout navigation.
 struct CartView: View {
     @ObservedObject var cartVM: CartViewModel
     @Binding var showCart: Bool
