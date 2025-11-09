@@ -19,7 +19,7 @@ class CartViewModel: CartViewModelProtocol {
     init(walletVM: WalletViewModel = WalletViewModel(persistenceService: WalletPersistenceService()), persistenceService: CartPersistenceServiceProtocol = CartPersistenceService()) {
         self.walletVM = walletVM
         self.persistenceService = persistenceService
-        loadCart(products: []) // products should be injected or loaded externally
+        loadCart(products: []) // Products should be injected or loaded externally
     }
 
     /// Adds a product to the cart, updates total, and saves cart

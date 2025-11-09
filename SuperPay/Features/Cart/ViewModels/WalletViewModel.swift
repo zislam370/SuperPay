@@ -13,7 +13,7 @@ class WalletViewModel: WalletViewModelProtocol, ObservableObject {
     private let persistenceService: WalletPersistenceServiceProtocol
 
 
-    init(wallet: Wallet = Wallet(id: UUID(), balance: 900.0), persistenceService: WalletPersistenceServiceProtocol) {
+    init(wallet: Wallet = Wallet(id: UUID(), balance: 20000.0), persistenceService: WalletPersistenceServiceProtocol) {
         self.wallet = wallet
         self.persistenceService = persistenceService
         loadWallet()

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 protocol ProductListViewModelProtocol: ObservableObject {
     var products: [Product] { get set }

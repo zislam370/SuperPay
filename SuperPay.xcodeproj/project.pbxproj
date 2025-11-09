@@ -236,7 +236,7 @@
 		318B15C32EBF446800AB91FD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -252,6 +252,7 @@
 			shellPath = /bin/sh;
 			shellScript = "
 ";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 

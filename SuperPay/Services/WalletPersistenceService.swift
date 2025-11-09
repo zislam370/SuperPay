@@ -13,6 +13,6 @@ class WalletPersistenceService: WalletPersistenceServiceProtocol {
     }
     func loadWallet() -> Double {
         let balance = UserDefaults.standard.double(forKey: "wallet")
-        return balance > 0 ? balance : 9000.0
+        return balance > 0 ? balance : 20000.0
     }
 }
