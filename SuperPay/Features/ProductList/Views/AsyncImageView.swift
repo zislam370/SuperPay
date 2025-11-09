@@ -1,11 +1,13 @@
+//
+//  AsyncImageView.swift
+//  SuperPay
+//
+//  Created by Zahid on 2025/11/09.
+//
+
 import SwiftUI
 
-// ImageCache is a singleton for caching UIImage
-class ImageCache {
-    static let shared = NSCache<NSURL, UIImage>()
-}
-
-// ViewModel for AsyncImageView to handle image loading
+// MARK: - AsyncImageView: Loads and displays an image from AsyncImageViewModel
 struct AsyncImageView: View {
     @ObservedObject var viewModel: AsyncImageViewModel
     var placeholder: Image = Image(systemName: "photo")
@@ -13,20 +15,18 @@ struct AsyncImageView: View {
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
-            let height = width * 0.9 // Calculate height for a taller image aspect ratio
+            let height = width * 0.9
             Group {
-                // Show progress indicator while image is loading
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(width: width, height: height)
-                // Show loaded image if available
                 } else if let data = viewModel.imageData, let image = UIImage(data: data) {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
                         .frame(width: width, height: height)
                         .clipped()
-                // Show placeholder if image loading failed
+                        .accessibilityLabel("Product image")
                 } else if viewModel.didFail {
                     placeholder
                         .resizable()
@@ -34,7 +34,8 @@ struct AsyncImageView: View {
                         .frame(width: width, height: height)
                         .opacity(0.5)
                         .clipped()
-                // Show placeholder while waiting for image data
+                        .accessibilityLabel("Image failed to load")
+                /// Show placeholder while waiting for image data
                 } else {
                     placeholder
                         .resizable()
@@ -42,6 +43,7 @@ struct AsyncImageView: View {
                         .frame(width: width, height: height)
                         .opacity(0.5)
                         .clipped()
+                        .accessibilityLabel("Loading image")
                 }
             }
         }

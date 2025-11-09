@@ -7,9 +7,11 @@
 
 import Foundation
 
+/// ProductService loads products from a local JSON file and provides async/completion APIs.
 class ProductService: ProductServiceProtocol {
+    /// Loads products from products.json asynchronously using a completion handler.
     func fetchProducts(completion: @escaping (Result<[Product], Error>) -> Void) {
-        DispatchQueue.global().async {
+        DispatchQueue.global(qos: .userInitiated).async {
             guard let url = Bundle.main.url(forResource: "products", withExtension: "json"),
                   let data = try? Data(contentsOf: url) else {
                 DispatchQueue.main.async {
@@ -30,8 +32,9 @@ class ProductService: ProductServiceProtocol {
         }
     }
     
+    /// Loads products from products.json using async/await.
     func fetchProductsAsync() async throws -> [Product] {
-        return try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { continuation in
             self.fetchProducts { result in
                 switch result {
                 case .success(let products):

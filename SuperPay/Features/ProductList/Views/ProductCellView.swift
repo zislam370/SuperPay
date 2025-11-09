@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-// ProductCellView displays a single product with image
+/// ProductCellView displays a single product with image
 struct ProductCellView: View {
     let product: Product
     let addToCart: (Product) -> Void

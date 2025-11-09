@@ -7,11 +7,11 @@
 
 import Foundation
 
-// CheckoutService simulates a network POST /checkout endpoint with random delay and random success/failure.
 class CheckoutService: CheckoutServiceProtocol {
+    /// Simulates a checkout request using a completion handler.
     func checkout(cartItems: [CartItem], completion: @escaping (CheckoutResult) -> Void) {
         let delay = Double.random(in: 1.0...2.5)
-        DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + delay) {
             let success = Bool.random()
             let message = success ? "Payment successful!" : "Payment failed. Please try again."
             DispatchQueue.main.async {
@@ -20,6 +20,7 @@ class CheckoutService: CheckoutServiceProtocol {
         }
     }
     
+    /// Simulates a checkout request using async/await.
     func checkoutAsync(cartItems: [CartItem]) async throws -> CheckoutResult {
         // Simulate network delay (0.5 to 2 seconds)
         let delay = Double.random(in: 0.5...2.0)
@@ -27,10 +28,8 @@ class CheckoutService: CheckoutServiceProtocol {
         // Randomly determine success or failure
         let success = Bool.random()
         if success {
-            // Simulate a successful payment with a random order ID
             return CheckoutResult(success: true, message: "Payment successful! Order ID: \(Int.random(in: 1000...9999))")
         } else {
-            // Simulate a payment failure
             throw NSError(domain: "CheckoutService", code: 500, userInfo: [NSLocalizedDescriptionKey: "Payment failed. Please try again."])
         }
     }

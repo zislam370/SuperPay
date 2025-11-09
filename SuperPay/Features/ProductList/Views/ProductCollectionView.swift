@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-// ProductCollectionView displays a grid of products
+/// ProductCollectionView displays a grid of products
 struct ProductCollectionView: View {
     let products: [Product]
     let addToCart: (Product) -> Void

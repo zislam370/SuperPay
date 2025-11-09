@@ -39,3 +39,6 @@ final class SuperPayUITests: XCTestCase {
         }
     }
 }
+
+// Most UI test cases have been separated into dedicated files for product list, cart, checkout, and wallet flows.
+// This file can be used for app launch and integration UI tests if needed.

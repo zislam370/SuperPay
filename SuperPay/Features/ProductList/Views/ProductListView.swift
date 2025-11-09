@@ -8,14 +8,14 @@
 import SwiftUI
 import Combine
 
-// ProductListView displays a list of products and manages cart navigation and refresh logic.
+/// ProductListView displays a list of products and manages cart navigation and refresh logic.
 struct ProductListView: View {
     @ObservedObject var viewModel: ProductListViewModel
     @ObservedObject var cartVM: CartViewModel
     @State private var showCart = false
     @State private var isRefreshing = false
 
-    // Modern SwiftUI navigation uses NavigationStack
+    /// Modern SwiftUI navigation uses NavigationStack
     var body: some View {
         NavigationStack {
             VStack {
@@ -64,7 +64,7 @@ struct ProductListView: View {
                 .sheet(isPresented: $showCart) {
                     CartView(cartVM: cartVM, showCart: $showCart)
                 }
-                WalletView(wallet: cartVM.walletVM.wallet)
+                WalletView(walletVM: cartVM.walletVM)
             }
             .navigationTitle("Products")
             .task { await viewModel.fetchProducts() }

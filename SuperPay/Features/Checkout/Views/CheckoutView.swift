@@ -8,14 +8,11 @@
 import SwiftUI
 import Combine
 
-
 struct CheckoutView: View {
     @ObservedObject var cartVM: CartViewModel
     @ObservedObject var viewModel: CheckoutViewModel
     @Environment(\.presentationMode) var presentationMode
-    @State private var showResultAlert = false
     @State private var lastResult: CheckoutResult? = nil
-    @State private var navigateToProductList = false
 
     var body: some View {
         NavigationStack {
@@ -29,17 +26,10 @@ struct CheckoutView: View {
                             .multilineTextAlignment(.center)
                             .padding()
                     } else if let result = viewModel.result {
-                        if result.success {
-                            Text(result.message)
-                                .foregroundColor(.green)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                        } else {
-                            Text(result.message)
-                                .foregroundColor(.red)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                        }
+                        Text(result.message)
+                            .foregroundColor(result.success ? .green : .red)
+                            .multilineTextAlignment(.center)
+                            .padding()
                     } else {
                         Button("Confirm Payment") {
                             Task {
@@ -67,7 +57,7 @@ struct CheckoutView: View {
             }
             .alert(item: $lastResult) { result in
                 Alert(
-                    title: Text(result.success ? "Congratulations" : "Opps"),
+                    title: Text(result.success ? "Congratulations" : "Oops"),
                     message: Text(result.message),
                     dismissButton: .default(Text("OK")) {
                         presentationMode.wrappedValue.dismiss()
