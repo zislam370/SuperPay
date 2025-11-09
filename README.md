@@ -1,6 +1,6 @@
 # SuperPay
 
-SuperPay is a modern SwiftUI-based mini shopping cart and payment demo app, designed to showcase best practices in architecture, modularity, and testability for iOS development. It features a product list, cart management, wallet integration, and a simulated checkout flow, all built with clean separation of concerns and robust error handling.
+SuperPay is a modern SwiftUI-based mini shopping cart and payment demo app, designed to showcase best practices in architecture, modularity, and testability for iOS development. It features a product list, cart management, wallet integration, and a simulated checkout flow, all built with clean separation of concerns and robust error handling.In this project I dont give much focus on UI/UX design as the main aim of this project is to showcase architecture, modularity, and testability. I have used basic SwiftUI components to keep the UI simple and functional and avoid 3rd party libraries to keep the project lightweight and focused on native Swift and SwiftUI capabilities.
 
 ## Features
 - Product listing with async image loading and caching
