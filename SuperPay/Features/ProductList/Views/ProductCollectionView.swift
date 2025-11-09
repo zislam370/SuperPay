@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 /// ProductCollectionView displays a grid of products
 struct ProductCollectionView: View {

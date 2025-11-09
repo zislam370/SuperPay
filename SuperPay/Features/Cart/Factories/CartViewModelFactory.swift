@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Factory to create CartViewModel instances with required dependencies.
 struct CartViewModelFactory {
     static func makeCartViewModel(products: [Product]) -> CartViewModel {
         let walletVM = WalletViewModel(persistenceService: WalletPersistenceService())
