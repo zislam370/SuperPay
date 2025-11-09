@@ -62,8 +62,7 @@ SuperPay/
 ├── SuperPayApp.swift
 ├── products.json
 ├── SuperPayTests/
-├── SuperPayUITests/
-└── README.md
+└── SuperPayUITests/
 ```
 
 ## How to Run
