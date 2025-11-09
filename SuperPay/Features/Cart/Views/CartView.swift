@@ -10,19 +10,14 @@ import Combine
 
 /// CartView displays the user's cart, allows item removal, shows total, and handles checkout navigation.
 struct CartView: View {
-    /// Cart view model containing cart items and wallet
     @ObservedObject var cartVM: CartViewModel
-    /// Controls cart sheet presentation from parent view
     @Binding var showCart: Bool
-    /// Controls checkout sheet presentation
     @State private var showCheckout = false
-    /// Presentation mode for dismissing the sheet
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
             VStack {
-                // List of cart items
                 List(cartVM.items) { item in
                     HStack {
                         Text(item.product.name)
@@ -38,26 +33,22 @@ struct CartView: View {
                     }
                 }
                 .background(Color(.systemBackground))
-                // Show total price
                 Text(String(format: "Total: ¥%.2f", cartVM.total))
                     .font(.title2)
                     .padding()
                     .accessibilityLabel(Text(String(format: "Cart total: $%.2f", cartVM.total)))
-                // Checkout button
                 Button("Checkout") {
                     showCheckout = true
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(cartVM.items.isEmpty)
-                .accessibilityLabel("Proceed to checkout")
-                // Present checkout sheet
+                .accessibilityLabel("Checkout")
                 .sheet(isPresented: $showCheckout) {
                     CheckoutView(
                         cartVM: cartVM,
                         viewModel: CheckoutViewModel(cartVM: cartVM, walletVM: cartVM.walletVM)
                     )
                 }
-                // Show wallet view
                 WalletView(walletVM: cartVM.walletVM)
             }
             .navigationTitle("Cart")

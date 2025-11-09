@@ -11,7 +11,11 @@ import Foundation
 class CartPersistenceService: CartPersistenceServiceProtocol {
     // Saves cart items to UserDefaults.
     func saveCart(items: [CartItem]) {
-        let raw = items.map { [$0.id.uuidString, String($0.product.id), String($0.quantity)] }
+        let raw = items.map { [
+            $0.id.uuidString,
+            String($0.product.id), // Convert Int to String
+            String($0.quantity)    // Convert Int to String
+        ] }
         if let data = try? JSONEncoder().encode(raw) {
             UserDefaults.standard.set(data, forKey: "cart")
         }

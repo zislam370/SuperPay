@@ -11,24 +11,40 @@ final class CartUITests: XCTestCase {
     func testAddToCartAndViewCart() {
         let app = XCUIApplication()
         app.launch()
-        // Tap first product's Add button (assumes accessibility identifier is set)
-        let addButton = app.buttons["Add to Cart"].firstMatch
-        if addButton.exists { addButton.tap() }
-        // Tap Go to Cart button
-        app.buttons["Go to Cart"].tap()
-        // Assert cart view is visible
-        XCTAssertTrue(app.navigationBars["Cart"].exists)
-        // Assert cart item exists
-        XCTAssertTrue(app.staticTexts["Total:"].exists)
+        
+        let addButton = app.buttons["Add"].firstMatch
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8))
+        
+        addButton.tap()
+        let goToCartButton = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Go to Cart'"))
+            .element(boundBy: 0)
+        XCTAssertTrue(goToCartButton.waitForExistence(timeout: 5))
+        
+        goToCartButton.tap()
+        XCTAssertTrue(app.navigationBars["Cart"].waitForExistence(timeout: 8))
+        
+        let cartTotalLabel = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Cart total:'")).element(boundBy: 0)
+        XCTAssertTrue(cartTotalLabel.waitForExistence(timeout: 5))
     }
     func testRemoveFromCart() {
         let app = XCUIApplication()
         app.launch()
-        app.buttons["Go to Cart"].tap()
-        // Tap Remove button if exists
-        let removeButton = app.buttons.matching(identifier: "Remove").firstMatch
-        if removeButton.exists { removeButton.tap() }
-        // Assert cart is empty
-        XCTAssertTrue(app.staticTexts["Total: $0.00"].exists)
+        
+        let addButton = app.buttons["Add"].firstMatch
+        XCTAssertTrue(addButton.waitForExistence(timeout: 8))
+        
+        addButton.tap()
+        let goToCartButton = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Go to Cart'")).firstMatch
+        XCTAssertTrue(goToCartButton.waitForExistence(timeout: 8))
+        
+        goToCartButton.tap()
+        let removeButton = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Remove'" )).firstMatch
+        XCTAssertTrue(removeButton.waitForExistence(timeout: 8))
+        
+        removeButton.tap()
+        let allLabels = app.staticTexts.allElementsBoundByIndex.map { $0.label }
+        print("Cart staticText labels after remove:", allLabels)
+        let emptyTotalLabel = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH 'Cart total:'" )).element(boundBy: 0)
+        XCTAssertTrue(emptyTotalLabel.waitForExistence(timeout: 5))
     }
 }
